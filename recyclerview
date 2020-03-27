@@ -1,0 +1,82 @@
+1. Create a List Layout file of xml in res folder.
+2. Create a RecyclerView Adapter as a Java class.
+    a) Syntax of RecyclerView Adapter class:
+
+    public class RecyclerViewAdapter{
+        public class ViewHolder extends RecyclerView.ViewHolder {
+            //All the widgets in the List Layout file
+            ImageView thumbnail;
+            TextView Title;
+
+            //Create a constructor
+            public ViewHolder(View itemView){
+                super(itemView);
+            }
+        }
+    }
+
+    b) Now extend the RecyclerViewAdapter class with RecyclerView.Adapter with ViewHolder as datatype
+        and also we will have to implement 3 methods onCreateViewHolder, onBindViewHolder, 
+        getItemCount()
+
+    public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+        public class ViewHolder extends RecyclerView.ViewHolder {
+            //All the widgets in the List Layout file
+            ImageView thumbnail;
+            TextView Title;
+
+            //Create a constructor
+            public ViewHolder(View itemView){
+                super(itemView);
+                //do findViewById to the widgets
+            }
+        }
+    }
+
+    c) Get all the variables like arrays and Context. Create a constructor
+    public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+        private ArrayList<String> mTitles = new ArrayList<>();
+        private Context mContext;
+
+        public class ViewHolder extends RecyclerView.ViewHolder {
+            //All the widgets in the List Layout file
+            ImageView thumbnail;
+            TextView Title;
+
+            //Create a constructor
+            public ViewHolder(View itemView){
+                super(itemView);
+            }
+        }
+    }
+
+    d) Get view in onCreateViewHolder
+        onCreateViewHolder - inflates all the individual layout
+                                - bind the layout file
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_listitem, parent, false);
+        
+        also return new ViewHolder(view)
+        
+    e) onBindViewHolder - binds all the widget and the actual data is gonna get attached
+
+In MainActivity.java
+
+- Create 2 methods
+    1st to add data to the arrays 
+
+    mTitles.add("Test");
+
+    2nd to initRecyclerView()
+
+    private void initRecyclerView() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        RecyclerView recyclerView = findViewById(R.id.horizontal_recyclerview);
+        recyclerView.setLayoutManager(layoutManager);
+        HRecyclerViewAdapter adapter = new HRecyclerViewAdapter(this, mMenuItems);
+        recyclerView.setAdapter(adapter);
+
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, mDialogues);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
